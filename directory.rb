@@ -1,18 +1,18 @@
 student_count = 4
 # first we print the list of students
 students = [
-  "Dr. Hannibal Lecter",
-  "Darth Vader",
-  "Nurse Ratched",
-  "Norman Bates"
+  {name: "Dr. Hannibal Lecter", cohort: :september},
+  {name: "Darth Vader", cohort: :september},
+  {name: "Nurse Ratched", cohort: :september},
+  {name: "Norman Bates", cohort: :september}
 ]
 def print_header
   puts "The students of Villains Academy"
   puts "--------------------------------"
 end
-def print(names)
-  names.each do |student|
-  puts student
+def print(students)
+  students.each do |student|
+  puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 def print_footer(names)
