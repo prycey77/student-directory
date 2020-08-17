@@ -1,0 +1,6 @@
+puts "The students of Villains Academy"
+puts "--------------------------------"
+puts "Dr. Hannibal Lecter"
+puts "Darth Vader"
+puts "Nurse Ratched"
+puts "Norman Bates"
