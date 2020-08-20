@@ -1,5 +1,6 @@
+require 'csv'
 @students = []
-@filename = ""
+
 def print_header
   puts 'The students of Villains Academy'
   puts '--------------------------------'
@@ -7,7 +8,7 @@ end
 
 def print_students_list(students)
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{student[0]} (#{student[1]} cohort)"
   end
 end
 
@@ -58,7 +59,7 @@ def show_students
   print_footer(@students)
 end
 
-def process(selection)
+def process(selection, filename = "students.csv")
   case selection
   when "1"
     puts "1 selected" 
@@ -68,7 +69,7 @@ def process(selection)
     show_students
   when "3"
     puts "3 selected"
-    save_students
+    save_students(filename)
   when "4"
     puts '4 selected'
     load_students
@@ -81,13 +82,15 @@ def process(selection)
 end
 
 def load_students(filename = 'students.csv')
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    add_to_array(name)
-    # @students << {name: name, cohort: cohort.to_sym}
-  end
-  file.close
+  @students = CSV.read(filename)
+  p @students
+  #File.open(filename, "r") do |file|
+  #  file.readlines.each do |line|
+  #    name, cohort = line.chomp.split(",")
+  #    add_to_array(name)
+     
+  #  end
+ # end # file.close
 end
 
 def save_students(filename = 'students.csv')
@@ -95,14 +98,16 @@ def save_students(filename = 'students.csv')
   puts "Enter a filename to save to file: (or hit 'Enter' to use #{filename})"
   file_name = STDIN.gets.chomp
   file_name == "" ? file_name = filename : nil
-  file = File.open(file_name, "w")
+  CSV.open(filename, "w") do |csv|
+  #File.open(file_name, "w") do |file|
   # iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  csv << [student[:name], student[:cohort]]
   end
-  file.close
+  # csv_line = student_data.join(",")
+   # file.puts csv_line
+ # end#
+  end #file.close
 end
 
 def try_load_students
@@ -136,3 +141,5 @@ end
 
 try_load_students
 interactive_menu
+
+
